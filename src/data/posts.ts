@@ -10,6 +10,12 @@ export interface Post {
   slug: string;
   tags?: string[];
   content?: string;
+  status?: "draft" | "ready" | "published";
+  canonicalUrl?: string | null;
+  keywords?: string[];
+  relatedSlugs?: string[];
+  qualityScore?: number;
+  toc?: Array<{ level: number; title: string; anchor: string }>;
 }
 
 export const manualPosts: Post[] = [

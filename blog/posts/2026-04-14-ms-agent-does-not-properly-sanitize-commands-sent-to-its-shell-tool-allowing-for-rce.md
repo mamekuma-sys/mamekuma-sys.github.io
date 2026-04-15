@@ -3,8 +3,14 @@ title: "MS-Agent does not properly sanitize commands sent to its shell tool, all
 date: 2026-04-14T23:18:30.186118
 slug: ms-agent-does-not-properly-sanitize-commands-sent-to-its-shell-tool-allowing-for-rce
 draft: false
+status: published
+quality_score: 0.0
+canonical_url: "https://mamekuma-sys.github.io/blog/ms-agent-does-not-properly-sanitize-commands-sent-to-its-shell-tool-allowing-for-rce"
 categories: ["security"]
 tags: ["analysis", "blog-agent", "rce"]
+keywords: ["analysis", "blog-agent", "rce", "ms", "does", "not", "properly", "sanitize"]
+related_slugs: ["crewai-contains-multiple-vulnerabilities-including-ssrf-rce-and-local-file-read"]
+toc: [{ level: 2, title: "들어가며", anchor: "들어가며" }, { level: 2, title: "왜 지금 중요한가", anchor: "왜-지금-중요한가" }, { level: 2, title: "기술적으로 무엇이 핵심인가", anchor: "기술적으로-무엇이-핵심인가" }, { level: 2, title: "공격과 방어 관점에서의 함의", anchor: "공격과-방어-관점에서의-함의" }, { level: 2, title: "개인 학습 메모", anchor: "개인-학습-메모" }, { level: 2, title: "마무리", anchor: "마무리" }, { level: 2, title: "참고 자료", anchor: "참고-자료" }]
 summary: "'MS-Agent does not properly sanitize commands sent to its shell tool, allowing for RCE'가 왜 중요한지 설명하고, 원문에서 확인되는 기술적 함의를 실무 관점에서 정리한다."
 ---
 # MS-Agent does not properly sanitize commands sent to its shell tool, allowing for RCE 분석과 실무 시사점
