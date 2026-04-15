@@ -1,3 +1,5 @@
+import { generatedPosts } from "./generated-posts";
+
 export interface Post {
   id: string;
   title: string;
@@ -10,7 +12,7 @@ export interface Post {
   content?: string;
 }
 
-export const posts: Post[] = [
+export const manualPosts: Post[] = [
   {
     id: "1",
     title: "AI MVP를 하루 만에 만들며 배운 것들",
@@ -217,4 +219,9 @@ MVP의 가장 큰 적은 기능 추가 욕구다. 핵심 가설 하나만 검증
   },
 ];
 
-export const categories = ["All", "AI", "Security", "Startup", "Dev Log", "Space Tech", "Study Notes"];
+export const posts: Post[] = [...generatedPosts, ...manualPosts];
+
+export const categories = [
+  "All",
+  ...Array.from(new Set(posts.map((post) => post.category))).sort((left, right) => left.localeCompare(right)),
+];
