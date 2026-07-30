@@ -111,7 +111,7 @@ Those are separate, testable projects and receive separate plans after this scaf
 Every implementation-plan Task is a Stage. Its existing commit step creates a local candidate commit, not a pushable final result. After each candidate commit:
 
 1. Run `human-editorial-review` and `ai-technical-review` independently.
-2. Apply and review up to three correction attempts.
+2. Apply corrections and review them as needed, with a maximum of three valid review attempts in total including the initial attempt.
 3. Add `docs/reviews/stages/scaffold-task-<two-digit-task>.md`.
 4. Amend the candidate commit with the report.
 5. Rerun the Task's focused checks.

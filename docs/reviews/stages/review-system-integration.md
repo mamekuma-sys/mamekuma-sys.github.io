@@ -1,9 +1,9 @@
 # review-system-integration Stage Review
 
 - Task: Enforce the Stage gate in repository instructions
-- Base commit: `1def05c9bd89bb58afa39ba2e78c56b8fe64631f`
-- Reviewed candidate commit: `43ff9fb5d877f2414f1084c4faf9cf388691e676`
-- Reviewed at: 2026-07-31T00:00:00.000Z
+- Base commit: `561c45e64ccdc2200deda6854cdd13bf1597309c`
+- Reviewed candidate commit: `8b1cf209860e18133a3d6d864af3238fe879ebcc`
+- Reviewed at: 2026-07-31T00:30:00.000Z
 - Human review status: Simulated human editorial review
 
 ## Scope
@@ -17,28 +17,29 @@
 | Attempt | Human | AI | Critical | Checks | Verdict |
 |---:|---:|---:|---:|---|---|
 | 1 | 100 | 100 | 0 | PASS | PASS |
+| 2 | 100 | 100 | 0 | PASS | PASS |
 
 ## Human Editorial evidence
 
 | Dimension | Raw score | Evidence |
 |---|---:|---|
-| user-value | 5 | AGENTS.md:85 Every implementation-plan Task is explicitly framed as a Stage, so maintainers can identify when the review workflow applies. |
-| information-clarity | 5 | docs/superpowers/plans/2026-07-30-medical-ai-site-scaffold.md:111 The global section presents the candidate-commit rule before a concise ordered six-step workflow, avoiding repeated Task-specific instructions. |
-| ux-accessibility | 5 | AGENTS.md:90 The policy requires both reviews after any correction, preserving the accessibility and reader-flow checks in the simulated editorial rubric instead of allowing a partial re-review. |
-| medical-trust | 5 | AGENTS.md:87 The mandatory independent human-editorial-review makes the repository's medical-trust review explicit for every Stage.; AGENTS.md:89 Both scores of at least 90 and zero critical findings are stated as the non-negotiable release condition. |
-| brand-consistency | 5 | HANDOFF.md:35 The reading order retains the approved site and editorial specifications while adding the review-system documents, preserving the project's established documentation flow. |
-| completeness | 5 | AGENTS.md:91 The maximum-three-valid-attempt stop condition and request for user direction prevent indefinite, opaque review loops.; HANDOFF.md:47 The active branch and active integration Stage are recorded for the next maintainer. |
+| user-value | 5 | AGENTS.md:89 The passing condition now tells every maintainer that scores, zero critical findings, and successful required checks jointly protect a Stage. |
+| information-clarity | 5 | docs/superpowers/plans/2026-07-30-medical-ai-site-scaffold.md:114 The global plan explicitly counts the initial review in the three-attempt ceiling, removing ambiguity about how many correction loops are allowed. |
+| ux-accessibility | 5 | AGENTS.md:90 Any correction still requires both reviews again, preserving the editorial review's accessibility and reader-flow coverage. |
+| medical-trust | 5 | AGENTS.md:87 Independent human-editorial-review remains mandatory for every candidate.; AGENTS.md:89 The policy retains the zero-critical condition alongside the 90-point threshold and required checks. |
+| brand-consistency | 5 | HANDOFF.md:48 The handoff uses the established Stage terminology while accurately labeling the previous gate result as a simulated workflow status rather than a product or clinical approval. |
+| completeness | 5 | HANDOFF.md:49 The current external SDD review/fix and push state is explicitly pending, so no remote or final-completion claim is implied. |
 
 ## AI Technical evidence
 
 | Dimension | Raw score | Evidence |
 |---|---:|---|
-| spec-compliance | 5 | AGENTS.md:85 The repository-wide section implements every mandatory operational rule: Stage identity, local candidate, independent reviews, Gate, threshold, retry, report, push boundary, no force-push, and HANDOFF record.; docs/superpowers/plans/2026-07-30-medical-ai-site-scaffold.md:109 A single Stage Quality Gate section is placed before Task 1 and applies its six required steps globally rather than duplicating them across nine Tasks. |
-| correctness-traceability | 5 | HANDOFF.md:41 The handoff records the review-system and bootstrap commits, report path, exact Task 1 checks and results, active branch, active Stage, and deployment state.; docs/superpowers/plans/2026-07-30-medical-ai-site-scaffold.md:115 The deterministic Stage report path includes a two-digit Task placeholder, making every scaffold Task report traceable. |
-| security-safety | 5 | AGENTS.md:93 The policy prohibits force-push and allows the feature-branch push only after PASS.; AGENTS.md:89 The 90/90 and zero-critical condition prevents an unreviewed or medically unsafe Stage from being released. |
-| verification-evidence | 5 | HANDOFF.md:44 The recorded Task 1 deterministic test command exited 0 with 18 tests passed.; HANDOFF.md:45 The recorded skill validator command exited 0 and validated all three skills.; HANDOFF.md:46 The recorded diff check exited 0 with no whitespace errors. |
-| maintainability | 5 | AGENTS.md:8 The session-start reading order includes the review-system design and execution plan, making the governing source material discoverable before implementation.; docs/superpowers/plans/2026-07-30-medical-ai-site-scaffold.md:111 The global wording keeps the existing per-Task plan DRY and centralizes future policy changes. |
-| static-ci | 5 | HANDOFF.md:49 The handoff explicitly confirms Pages remains disabled and no deployment occurred.; docs/superpowers/plans/2026-07-30-medical-ai-site-scaffold.md:120 The global rule prohibits a candidate push before PASS while leaving the approved static-export plan unchanged. |
+| spec-compliance | 5 | AGENTS.md:89 The repository-wide policy now states all four deterministic PASS conditions, including that every required check exits 0.; docs/superpowers/plans/2026-07-30-medical-ai-site-scaffold.md:114 The plan's correction workflow now defines a total maximum of three valid attempts including the first.; HANDOFF.md:48 The integration Stage's first Gate result includes both scores, critical count, and required-check verdict. |
+| correctness-traceability | 5 | HANDOFF.md:49 The handoff differentiates the local fix/review state from a remote push and identifies the external review's three findings as the reason it remains pending.; AGENTS.md:92 The report path remains stable and Stage-addressable for audit traceability. |
+| security-safety | 5 | AGENTS.md:89 Required checks must all exit 0 before a Stage can pass, preventing failed validation from being represented as a release condition.; AGENTS.md:93 The policy continues to prohibit force-push and restricts a push to a passing feature-branch Stage. |
+| verification-evidence | 5 | HANDOFF.md:44 The recorded Task 1 complete Node test command exited 0 with 18 tests passed.; HANDOFF.md:45 The recorded validator command exited 0 and validated all three skills.; HANDOFF.md:46 The recorded diff check exited 0 without whitespace errors. |
+| maintainability | 5 | docs/superpowers/plans/2026-07-30-medical-ai-site-scaffold.md:114 The attempt-limit clarification is centralized in the global Gate section, so all nine scaffold Tasks consume one unambiguous rule. |
+| static-ci | 5 | HANDOFF.md:50 Pages remains disabled and no deployment occurred.; HANDOFF.md:49 The external review/fix and remote push are explicitly pending, preserving the static-site deployment boundary. |
 
 ## Critical findings
 
@@ -46,7 +47,9 @@
 
 ## Fixes applied
 
-없음
+- Added the required-check exit-code condition to the repository-wide PASS policy.
+- Clarified that the three valid review attempts include the initial review.
+- Recorded the first Gate PASS and the pending external SDD fix/push state in HANDOFF.md.
 
 ## Verification commands
 
@@ -58,7 +61,7 @@
 
 ## Remaining risks
 
-- The branch is intentionally not pushed because external SDD cross-review is an additional gate for this execution.
+- External SDD review and any subsequent fix remain pending; no remote push is authorized.
 
 ## Final verdict
 

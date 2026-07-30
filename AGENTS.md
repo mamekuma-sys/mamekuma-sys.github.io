@@ -86,7 +86,7 @@ npm run build
 - 각 Stage는 먼저 로컬 후보 커밋을 만든다.
 - 후보 커밋마다 `human-editorial-review`와 `ai-technical-review`를 서로 독립적으로 실행한다.
 - 두 리뷰 결과 뒤에 `stage-quality-gate`를 실행한다.
-- Human과 AI 점수는 각각 90점 이상이고 치명적 문제 0개여야 한다.
+- Human과 AI 점수는 각각 90점 이상이고 치명적 문제 0개이며, 필수 검증 명령이 모두 종료 코드 0이어야 한다.
 - 수정이 있으면 두 리뷰를 모두 다시 실행한다.
 - 유효 시도는 최대 3회이며, 세 번째에도 통과하지 못하면 중단하고 사용자에게 판단을 요청한다.
 - `docs/reviews/stages/<stage-id>.md`를 커밋한다.

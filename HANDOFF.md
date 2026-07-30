@@ -45,7 +45,8 @@
 - Task 1 검증: `node .agents/skills/stage-quality-gate/scripts/validate-skills.mjs` — 종료 코드 0, `Validated 3 skills.`
 - Task 1 검증: `git diff --check` — 종료 코드 0, 공백 오류 없음.
 - 현재 기능 브랜치: `feat/stage-quality-review-system`
-- 활성 Stage: `review-system-integration` — 저장소 지침에 Stage Gate를 통합 중.
+- `review-system-integration` Stage Gate: PASS (attempt 1; Human 100.0, AI 100.0, critical 0, checks PASS).
+- 외부 SDD review/fix 및 push: pending. 외부 검토 Important findings 3건의 Fix Round 1을 로컬에서 반영·재검토 중이며, 원격 푸시는 하지 않았다.
 - GitHub Pages는 계속 비활성 상태이며, 배포는 발생하지 않았다.
 
 ## 확정된 결정
