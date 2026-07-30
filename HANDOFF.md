@@ -6,10 +6,11 @@
 - 새 GitHub Pages 사이트 설계 승인·커밋 완료
 - 승인된 시각 방향: 흰색 `Developer Workspace`
 - 승인된 기술: Next.js App Router + React + TypeScript + Tailwind CSS + MDX
-- 로컬 저장소만 초기화되어 있으며 원격 저장소는 연결되지 않음
+- 새 공개 저장소를 생성하고 로컬 `main`을 `origin/main`에 푸시함
 - 사이트 코드는 아직 스캐폴딩하지 않음
 - 기존 GitHub Pages 저장소는 사용자 승인 후 2026-07-30 삭제 완료
-- 공개 주소는 동일 이름 저장소를 다시 만들고 배포할 때까지 사용할 수 없음
+- 동일 이름의 새 저장소를 2026-07-30 다시 생성함
+- GitHub Pages는 아직 설정·배포하지 않음
 
 ## 주요 커밋
 
@@ -85,15 +86,14 @@
 
 - 의료 AI 최신 연구와 모델의 본격 조사·집필
 - Imagegen 최종 이미지 8장 생성
-- 동일 이름 원격 저장소 신규 생성과 로컬 `main` 연결
 - GitHub Pages·Discussions·Giscus 실제 전환
 
 ## 중요한 안전 게이트
 
-- `mamekuma-sys/mamekuma-sys.github.io`는 현재 존재하지 않는다.
-- 사이트 스캐폴딩 계획에서는 원격 저장소를 생성하거나 Pages를 설정하지 않는다.
-- 새 사이트가 로컬에서 완성되고 전체 검증을 통과한 뒤 동일 이름 저장소 생성 계획을 별도로 실행한다.
-- 새 원격의 기본 브랜치는 현재 로컬 브랜치와 동일한 `main`으로 설정한다.
+- 새 `mamekuma-sys/mamekuma-sys.github.io` 저장소가 존재하며 기본 브랜치는 `main`이다.
+- 사이트 스캐폴딩은 별도 기능 브랜치와 worktree에서 진행한다.
+- 새 사이트가 전체 검증을 통과하기 전에는 Pages를 활성화하거나 `main`에 배포하지 않는다.
+- 스캐폴딩 완료 후 검토된 변경만 `main`에 병합한다.
 
 ## 2026-07-30 원격 삭제 기록
 
@@ -106,6 +106,15 @@
 - 삭제된 원격을 가리키던 `origin` 제거
 - 로컬 브랜치를 `master`에서 `main`으로 변경
 
+## 2026-07-30 새 원격 생성 기록
+
+- 생성 대상: `mamekuma-sys/mamekuma-sys.github.io`
+- 공개 저장소로 생성
+- 로컬 `main`을 새 원격의 `main`으로 최초 푸시
+- 로컬 `main`이 `origin/main`을 추적하도록 설정
+- 생성 목적: 다른 노트북에서도 설계·계획 문서를 이어서 작업
+- Pages 설정과 사이트 배포는 아직 실행하지 않음
+
 ## 현재 환경
 
 - 작업 폴더: `C:\Users\user\Desktop\Healthcare`
@@ -113,8 +122,8 @@
 - 현재 브랜치: `main`
 - 대상 GitHub 계정: `mamekuma-sys`
 - 향후 공개 주소: `https://mamekuma-sys.github.io/`
-- 향후 원격 저장소: `https://github.com/mamekuma-sys/mamekuma-sys.github.io`
-- 현재 원격 연결: 없음
+- 현재 원격 저장소: `https://github.com/mamekuma-sys/mamekuma-sys.github.io`
+- 현재 원격 연결: `origin`
 
 ## 시각 참고
 
