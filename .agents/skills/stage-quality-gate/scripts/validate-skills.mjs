@@ -148,6 +148,14 @@ export function validateSkills(repositoryRoot = process.cwd()) {
   const skillsRoot = path.join(root, ".agents", "skills");
   const errors = [];
 
+  if (existsSync(skillsRoot) && statSync(skillsRoot).isDirectory()) {
+    for (const entry of readdirSync(skillsRoot, { withFileTypes: true })) {
+      if (entry.isDirectory() && !Object.hasOwn(SKILLS, entry.name)) {
+        errors.push(`unexpected skill directory: ${entry.name}`);
+      }
+    }
+  }
+
   for (const [skillName, contract] of Object.entries(SKILLS)) {
     const skillDirectory = path.join(skillsRoot, skillName);
     if (!existsSync(skillDirectory) || !statSync(skillDirectory).isDirectory()) {

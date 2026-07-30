@@ -120,3 +120,28 @@ test("requires the approved frontmatter descriptions", () => {
     rmSync(fixtureRoot, { recursive: true, force: true });
   }
 });
+
+test("rejects unexpected top-level skill directories and ignores files", () => {
+  const fixtureRoot = path.join(
+    process.cwd(),
+    ".superpowers",
+    "validate-unexpected-skill-fixture",
+  );
+  const fixtureSkills = path.join(fixtureRoot, ".agents", "skills");
+  rmSync(fixtureRoot, { recursive: true, force: true });
+  mkdirSync(path.dirname(fixtureSkills), { recursive: true });
+  cpSync(path.join(process.cwd(), ".agents", "skills"), fixtureSkills, {
+    recursive: true,
+  });
+
+  try {
+    mkdirSync(path.join(fixtureSkills, "unexpected-skill"));
+    writeFileSync(path.join(fixtureSkills, "catalog.txt"), "not a skill directory\n");
+
+    const errors = validateSkills(fixtureRoot).join("\n");
+    assert.match(errors, /unexpected-skill/i);
+    assert.doesNotMatch(errors, /catalog\.txt/i);
+  } finally {
+    rmSync(fixtureRoot, { recursive: true, force: true });
+  }
+});
