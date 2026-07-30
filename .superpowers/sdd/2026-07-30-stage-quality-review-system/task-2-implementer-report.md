@@ -72,3 +72,28 @@ The raw independent review JSON and Gate input remain in ignored `.superpowers/r
 ## Remaining concern
 
 External SDD cross-review remains required before any remote push. GitHub Pages remains disabled; no deployment occurred.
+
+## Fix Round 1
+
+### External findings and minimal corrections
+
+1. `AGENTS.md` now requires every mandatory check to exit 0 alongside the Human 90, AI 90, and zero-critical PASS conditions.
+2. The scaffold plan now says the three-valid-attempt ceiling includes the initial attempt.
+3. `HANDOFF.md` now records the first integration Gate PASS (Human 100.0, AI 100.0, critical 0, checks PASS) and accurately marks external SDD review/fix and push as pending.
+
+### RED evidence
+
+Before the corrections, the expanded documentation assertion exited 1 because it required the missing required-check condition, unambiguous total-attempt wording, and the detailed integration Gate status in `HANDOFF.md`.
+
+### GREEN and Stage Gate evidence
+
+| Command | Result |
+|---|---|
+| Expanded Fix Round 1 policy assertion | Exit 0 after the three corrections. |
+| Original Task 2 repository-policy assertion | Exit 0. |
+| `node .agents/skills/stage-quality-gate/scripts/validate-skills.mjs` | Exit 0; `Validated 3 skills.` |
+| `git diff --check` | Exit 0; no whitespace errors. |
+| `git diff --check HEAD^ HEAD` | Exit 0; no whitespace errors after the Stage-report amend. |
+| `node .agents/skills/stage-quality-gate/scripts/score-review.mjs --input .superpowers/reviews/review-system-integration/attempt-2/input.json` | Exit 0; PASS, Human 100.0, AI 100.0, critical 0, checks PASS. |
+
+Attempt 2 is a fresh independent Human and AI review of candidate `8b1cf209860e18133a3d6d864af3238fe879ebcc`. The refreshed Stage report is committed in `f915b2c122cbc06549dac5be434d8519b7d95d4e`. No remote push was attempted; the external SDD follow-up remains pending.
