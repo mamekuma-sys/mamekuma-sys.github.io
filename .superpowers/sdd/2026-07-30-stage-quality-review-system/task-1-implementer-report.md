@@ -115,3 +115,38 @@ The committed evidence is `docs/reviews/stages/review-system-bootstrap.md`. Huma
 - The upstream `quick_validate.py` could not run without PyYAML. The Task prohibits adding dependencies, so the committed dependency-free validator checks the required frontmatter, exact descriptions, file references, dimensions, gate wording, placeholders, and absolute user paths instead.
 - The external SDD review remains an additional parent-level acceptance gate.
 - No push was attempted, in accordance with the parent instruction overriding Task 1's original push step.
+
+## Fix Round 1
+
+### Finding and change
+
+The external review found that `validateSkills()` verified the three required packages but did not reject an additional top-level directory under `.agents/skills/`. The validator now enumerates top-level entries, rejects any directory other than `human-editorial-review`, `ai-technical-review`, or `stage-quality-gate`, and continues to ignore ordinary top-level files.
+
+Changed files:
+
+- `.agents/skills/stage-quality-gate/tests/validate-skills.test.mjs`
+- `.agents/skills/stage-quality-gate/scripts/validate-skills.mjs`
+
+### RED evidence
+
+After adding an isolated fixture containing `unexpected-skill/` and `catalog.txt`, this command failed as expected:
+
+```text
+node --test .agents/skills/stage-quality-gate/tests/validate-skills.test.mjs
+```
+
+Result: exit 1, 3 passed and 1 failed. The new test expected `/unexpected-skill/i`, but `validateSkills()` returned an empty error array. The non-directory assertion was already defined in the same regression test.
+
+### GREEN and verification evidence
+
+| Command | Result |
+|---|---|
+| `node --test .agents/skills/stage-quality-gate/tests/validate-skills.test.mjs` | Exit 0, 4/4 passed. |
+| `node --test .agents/skills/stage-quality-gate/tests/*.test.mjs` | Exit 0, 19/19 passed. |
+| `node .agents/skills/stage-quality-gate/scripts/validate-skills.mjs` | Exit 0, `Validated 3 skills.` |
+| `git diff --check` | Exit 0, no whitespace errors. |
+| `git diff --cached --check` | Exit 0 before the fix commit. |
+
+Fix commit: `2e16c36b291195f101e8a11bd0d89871305833d5`
+
+No remote push was attempted.
