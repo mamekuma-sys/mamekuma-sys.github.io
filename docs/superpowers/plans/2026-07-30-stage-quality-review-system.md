@@ -1205,7 +1205,7 @@ Update `HANDOFF.md` with:
 - next action: create an isolated scaffold feature worktree and start scaffold Task 1;
 - explicit confirmation that Pages was not enabled and nothing was deployed.
 
-- [ ] **Step 8: Amend, verify, and push the passing baseline Stage**
+- [ ] **Step 8: Amend and verify the passing baseline Stage**
 
 Run:
 
@@ -1218,7 +1218,7 @@ git diff --check HEAD^ HEAD
 git status --short --branch
 ```
 
-Verify both review scores and critical count from the committed report. Then push the current feature branch.
+Verify both review scores and critical count from the committed report. External SDD cross-review is an additional gate for this baseline Stage, so keep the passing commit local and do not push from Task 3. The coordinating session may push the current feature branch only after that external review accepts the implementation report and candidate.
 
 Expected:
 
@@ -1226,7 +1226,7 @@ Expected:
 - the report says `PASS`;
 - both scores are at least 90.0;
 - critical findings equal 0;
-- local and remote feature-branch SHAs match;
+- the final local candidate SHA is recorded for external SDD cross-review;
 - no Pages or deployment setting changed.
 
 ---

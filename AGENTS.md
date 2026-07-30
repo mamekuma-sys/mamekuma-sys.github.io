@@ -66,7 +66,7 @@
 
 스캐폴딩 이후 최소 검증 명령은 다음과 같다.
 
-```powershell
+```bash
 npm run typecheck
 npm run lint
 npm run test

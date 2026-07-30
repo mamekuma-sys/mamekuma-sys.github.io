@@ -147,7 +147,7 @@ The candidate must not be pushed before PASS. A passing Stage requires both revi
 
 Run:
 
-```powershell
+```bash
 git status --short
 git branch --show-current
 git log -3 --oneline
@@ -159,30 +159,31 @@ Expected: only implementation-session changes are present, and the branch is the
 
 Run:
 
-```powershell
-npx.cmd create-next-app@latest .next-scaffold --typescript --tailwind --eslint --app --src-dir --use-npm --import-alias "@/*" --yes
+```bash
+npx create-next-app@latest .next-scaffold --typescript --tailwind --eslint --app --src-dir --use-npm --import-alias "@/*" --yes
 ```
 
 Expected: `.next-scaffold` contains an App Router project and `package-lock.json`.
 
 - [ ] **Step 3: Copy only the generated foundation into the repository root**
 
-Run in PowerShell from the repository root:
+Run in a POSIX shell from the repository root:
 
-```powershell
-$scaffoldRoot = Resolve-Path -LiteralPath '.next-scaffold'
-$repoRoot = Resolve-Path -LiteralPath '.'
-if (-not $scaffoldRoot.Path.StartsWith($repoRoot.Path, [System.StringComparison]::OrdinalIgnoreCase)) {
-  throw 'Scaffold directory escaped the repository'
+```bash
+repo_root=$(pwd -P)
+scaffold_root=$(cd .next-scaffold && pwd -P)
+test "$scaffold_root" = "$repo_root/.next-scaffold" || {
+  echo "Scaffold directory escaped the repository: $scaffold_root" >&2
+  exit 1
 }
-Copy-Item -LiteralPath "$($scaffoldRoot.Path)\package.json" -Destination '.\package.json'
-Copy-Item -LiteralPath "$($scaffoldRoot.Path)\package-lock.json" -Destination '.\package-lock.json'
-Copy-Item -LiteralPath "$($scaffoldRoot.Path)\next.config.ts" -Destination '.\next.config.ts'
-Copy-Item -LiteralPath "$($scaffoldRoot.Path)\postcss.config.mjs" -Destination '.\postcss.config.mjs'
-Copy-Item -LiteralPath "$($scaffoldRoot.Path)\eslint.config.mjs" -Destination '.\eslint.config.mjs'
-Copy-Item -LiteralPath "$($scaffoldRoot.Path)\tsconfig.json" -Destination '.\tsconfig.json'
-Copy-Item -LiteralPath "$($scaffoldRoot.Path)\src" -Destination '.\src' -Recurse
-Copy-Item -LiteralPath "$($scaffoldRoot.Path)\public" -Destination '.\public' -Recurse
+cp "$scaffold_root/package.json" "$repo_root/package.json"
+cp "$scaffold_root/package-lock.json" "$repo_root/package-lock.json"
+cp "$scaffold_root/next.config.ts" "$repo_root/next.config.ts"
+cp "$scaffold_root/postcss.config.mjs" "$repo_root/postcss.config.mjs"
+cp "$scaffold_root/eslint.config.mjs" "$repo_root/eslint.config.mjs"
+cp "$scaffold_root/tsconfig.json" "$repo_root/tsconfig.json"
+cp -R "$scaffold_root/src" "$repo_root/src"
+cp -R "$scaffold_root/public" "$repo_root/public"
 ```
 
 Expected: repository docs remain untouched and the root gains only the whitelisted scaffold files.
@@ -191,7 +192,7 @@ Expected: repository docs remain untouched and the root gains only the whitelist
 
 Run:
 
-```powershell
+```bash
 npm install zod gray-matter next-mdx-remote remark-gfm rehype-slug github-slugger reading-time remove-markdown
 npm install -D vitest jsdom @testing-library/react @testing-library/jest-dom @testing-library/user-event @vitejs/plugin-react vite-tsconfig-paths @playwright/test @axe-core/playwright sharp tsx
 ```
@@ -295,7 +296,7 @@ describe("HomePage", () => {
 
 Run:
 
-```powershell
+```bash
 npm run test -- src/app/page.test.tsx
 ```
 
@@ -320,34 +321,36 @@ export default function HomePage() {
 
 Run:
 
-```powershell
+```bash
 npm run test -- src/app/page.test.tsx
 npm run typecheck
 npm run lint
 npm run build
-Test-Path -LiteralPath '.\out\index.html'
+test -f out/index.html
 ```
 
-Expected: tests, types, lint, and build pass; the final command prints `True`.
+Expected: tests, types, lint, and build pass; the final command exits 0.
 
 - [ ] **Step 11: Remove the staging scaffold safely**
 
 Resolve and verify the exact target before removal:
 
-```powershell
-$repoRoot = (Resolve-Path -LiteralPath '.').Path
-$stagingPath = (Resolve-Path -LiteralPath '.next-scaffold').Path
-if ($stagingPath -ne (Join-Path $repoRoot '.next-scaffold')) {
-  throw "Unexpected scaffold path: $stagingPath"
+```bash
+repo_root=$(pwd -P)
+staging_path=$(cd .next-scaffold && pwd -P)
+expected_staging_path="$repo_root/.next-scaffold"
+test "$staging_path" = "$expected_staging_path" || {
+  echo "Unexpected scaffold path: $staging_path" >&2
+  exit 1
 }
-Remove-Item -LiteralPath $stagingPath -Recurse -Force
+rm -rf -- "$staging_path"
 ```
 
 Expected: only `.next-scaffold` is removed.
 
 - [ ] **Step 12: Commit the foundation**
 
-```powershell
+```bash
 git add package.json package-lock.json next.config.ts postcss.config.mjs eslint.config.mjs tsconfig.json vitest.config.ts vitest.setup.ts src/app public .gitignore
 git commit -m "build: scaffold static Next.js site"
 ```
@@ -423,7 +426,7 @@ Create `valid-article.mdx` with `draft: true` and all required metadata. Create 
 
 Run:
 
-```powershell
+```bash
 npm run test -- src/lib/content/articles.test.ts
 ```
 
@@ -467,7 +470,13 @@ export const articleMetaSchema = z
       deployment: z.enum(["research", "pilot", "selective", "operational"]),
     }),
     sourceStates: z.array(
-      z.enum(["peer-reviewed", "preprint", "official", "company"]),
+      z.enum([
+        "peer-reviewed",
+        "preprint",
+        "official",
+        "company",
+        "independent-unverified",
+      ]),
     ),
     hasKoreaContext: z.boolean(),
     coverImage: z.string().startsWith("/images/"),
@@ -615,7 +624,7 @@ Add the command to `package.json`:
 
 Run:
 
-```powershell
+```bash
 npm run test -- src/lib/content/articles.test.ts
 npm run content:validate
 ```
@@ -624,7 +633,7 @@ Expected: tests pass, including the invalid-fixture assertion; validation report
 
 - [ ] **Step 8: Commit the content domain**
 
-```powershell
+```bash
 git add src/lib/content src/content/articles scripts/validate-content.ts package.json package-lock.json
 git commit -m "feat: add validated MDX content domain"
 ```
@@ -683,7 +692,7 @@ describe("resolveTheme", () => {
 
 Run:
 
-```powershell
+```bash
 npm run test -- src/features/theme/theme.test.ts
 ```
 
@@ -837,7 +846,7 @@ document.documentElement.dataset.theme = theme;
 
 Run:
 
-```powershell
+```bash
 npm run test -- src/features/theme/theme.test.ts src/components/site/site-shell.test.tsx
 npm run typecheck
 npm run lint
@@ -847,7 +856,7 @@ Expected: all checks pass.
 
 - [ ] **Step 9: Commit the design foundation**
 
-```powershell
+```bash
 git add src/app src/components/site src/features/theme
 git commit -m "feat: add developer workspace shell and theme"
 ```
@@ -894,7 +903,7 @@ Also assert that no `draft: true` article appears when the page uses production 
 
 Run:
 
-```powershell
+```bash
 npm run test -- src/app/page.test.tsx
 ```
 
@@ -936,18 +945,19 @@ Development may show draft cards with a visible `DRAFT` label. Static production
 
 Run:
 
-```powershell
+```bash
 npm run test -- src/app/page.test.tsx
 npm run typecheck
 npm run lint
 npm run build
+! rg -n 'site-introduction|사이트 준비 안내' out
 ```
 
-Expected: all checks pass and no draft article text exists under `out/`.
+Expected: all checks pass; the final command exits 0 with no output, proving the scaffold draft is absent from `out/`.
 
 - [ ] **Step 7: Commit the home experience**
 
-```powershell
+```bash
 git add src/app/page.tsx src/app/page.test.tsx src/components/home src/components/content
 git commit -m "feat: build Medical AI Index home"
 ```
@@ -994,7 +1004,7 @@ Related articles must rank shared topic count first, shared tag count second, an
 
 Run:
 
-```powershell
+```bash
 npm run test -- src/lib/content/toc.test.ts src/lib/content/related.test.ts
 ```
 
@@ -1041,18 +1051,19 @@ The article layout must include:
 
 Run:
 
-```powershell
-npm run test -- src/lib/content/toc.test.ts src/lib/content/related.test.ts src/app/articles/[slug]/page.test.tsx
+```bash
+npm run test -- src/lib/content/toc.test.ts src/lib/content/related.test.ts 'src/app/articles/[slug]/page.test.tsx'
 npm run typecheck
 npm run lint
 npm run build
+test ! -e out/articles/site-introduction/index.html
 ```
 
-Expected: checks pass; draft routes do not exist in `out/articles`.
+Expected: checks pass; the final command exits 0 because the scaffold draft route does not exist in `out/articles`.
 
 - [ ] **Step 8: Commit article rendering**
 
-```powershell
+```bash
 git add src/app/articles src/components/article src/features/reading src/lib/content src/mdx
 git commit -m "feat: render static MDX articles"
 ```
@@ -1116,7 +1127,7 @@ Tests must prove:
 
 Run:
 
-```powershell
+```bash
 npm run test -- src/features/search/search-index.test.ts
 ```
 
@@ -1213,21 +1224,22 @@ Escape XML special characters in every interpolated title, description, and URL.
 
 Run:
 
-```powershell
+```bash
 npm run search:build
 npm run test -- src/features/search/search-index.test.ts
 npm run typecheck
 npm run lint
 npm run build
-Test-Path -LiteralPath '.\out\rss.xml'
-Test-Path -LiteralPath '.\out\sitemap.xml'
+test -f out/rss.xml
+test -f out/sitemap.xml
+! rg -n 'site-introduction|사이트 준비 안내' public/search/articles.json out/rss.xml out/sitemap.xml
 ```
 
-Expected: `public/search/articles.json` exists, checks pass, static discovery routes exist in `out/`, and both final commands print `True`.
+Expected: `public/search/articles.json` exists, checks pass, static discovery routes exist in `out/`, and the final three commands exit 0; the negative search emits no draft match.
 
 - [ ] **Step 9: Commit discovery**
 
-```powershell
+```bash
 git add scripts/build-search-index.ts public/search src/features/search src/features/topic-filter src/app
 git commit -m "feat: add static discovery and editorial routes"
 ```
@@ -1336,7 +1348,7 @@ Load the official Giscus client only when complete configuration exists. Map dis
 
 Run:
 
-```powershell
+```bash
 npm run test -- scripts/optimize-images.test.ts src/components/media/cover-image.test.tsx src/features/comments/giscus-comments.test.tsx
 npm run images:optimize
 npm run typecheck
@@ -1348,7 +1360,7 @@ Expected: all checks pass and the empty image source directory does not fail sca
 
 - [ ] **Step 8: Commit media and comments**
 
-```powershell
+```bash
 git add scripts/optimize-images.ts scripts/optimize-images.test.ts public/images src/components/media src/features/comments
 git commit -m "feat: add media pipeline and comment fallback"
 ```
@@ -1443,8 +1455,8 @@ Also tab through the header, search, explorer, main content, and footer to verif
 
 Run:
 
-```powershell
-npx.cmd playwright install chromium
+```bash
+npx playwright install chromium
 npm run test:e2e
 ```
 
@@ -1488,19 +1500,20 @@ Use `Not executed in this run` only for a command that genuinely could not run, 
 
 Run:
 
-```powershell
+```bash
 npm run typecheck
 npm run lint
 npm run test
 npm run test:e2e
 npm run build
+test -f out/index.html
 ```
 
 Expected: every command exits 0 and `out/index.html` exists.
 
 - [ ] **Step 9: Commit verification and CI**
 
-```powershell
+```bash
 git add playwright.config.ts tests/e2e .github/workflows docs/reviews
 git commit -m "test: add UX validation and static CI"
 ```
@@ -1557,15 +1570,15 @@ Read `vercel-react-best-practices` completely, then inspect only applicable rule
 
 Fix concrete findings and record them in `docs/reviews/ux-validation.md`.
 
-- [ ] **Step 4: Run the formal code review requested by the user**
+- [ ] **Step 4: Prepare the formal technical review scope**
 
-Use the repository `code-review` skill against the scaffold plan and site spec. Resolve all high-severity Standards or Spec findings. Record any intentionally deferred non-critical finding with its reason.
+Record the completed scaffold, site spec, exact changed-file list, and current verification exits as the review input. After Step 7 creates the local candidate commit, run `ai-technical-review` independently from `human-editorial-review`, then use `stage-quality-gate` as required by the global Stage section. Resolve every evidence-backed high-severity Standards or Spec finding. Record any intentionally deferred non-critical finding with its reason.
 
 - [ ] **Step 5: Run verification-before-completion**
 
 Use `superpowers:verification-before-completion`, then run:
 
-```powershell
+```bash
 npm run typecheck
 npm run lint
 npm run test
@@ -1590,7 +1603,7 @@ Update `HANDOFF.md` with:
 
 - [ ] **Step 7: Commit the reviewed scaffold**
 
-```powershell
+```bash
 git add src scripts tests .github docs/reviews HANDOFF.md package.json package-lock.json
 git commit -m "chore: complete reviewed site scaffold"
 ```

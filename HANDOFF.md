@@ -8,8 +8,9 @@
 - 승인된 기술: Next.js App Router + React + TypeScript + Tailwind CSS + MDX
 - 새 공개 저장소를 생성하고 로컬 `main`을 `origin/main`에 푸시함
 - Stage Quality Review System 설계 승인·커밋 완료
-- Human Editorial, AI Technical과 Stage Quality Gate 스킬 구현 및 Task 1 Stage 검토 완료
-- `review-system-integration`이 저장소 지침을 Stage Gate에 연결하는 활성 Stage임
+- Human Editorial, AI Technical과 Stage Quality Gate 스킬 구현 및 review-system Tasks 1–2 완료
+- `baseline-plans-review` 내부 Gate PASS: attempt 2, Human 97.0, AI 95.0, critical 0, checks PASS
+- baseline 구현은 외부 SDD 교차 검토 전의 로컬 후보이며 원격 push는 보류
 - 사이트 코드는 아직 스캐폴딩하지 않음
 - 기존 GitHub Pages 저장소는 사용자 승인 후 2026-07-30 삭제 완료
 - 동일 이름의 새 저장소를 2026-07-30 다시 생성함
@@ -20,10 +21,17 @@
 - `9c98587` — 의료 AI 블로그 시리즈 설계
 - `6272a8f` — 의료 AI 사이트 설계
 - `7851bfa` — Stage Quality Review System 설계
+- `95ce6f7` — Stage Quality Review System 구현 계획
 - `526e65f` — 세 리뷰 스킬과 결정적 Gate 구현
 - `75e2e56` — Task 1 Stage 보고서
 - `2e16c36` — 예상하지 않은 리뷰 스킬 거부 보강
 - `1def05c` — Task 1 구현 보고서의 품질 수정 라운드 기록
+- `20ff51b` — 저장소 전체 Stage Quality Gate 정책 통합
+- `561c45e` — Task 2 Stage 보고서
+- `f915b2c` — Gate 합격 조건과 attempt 한도 명확화
+- `8e6c1c5` — Task 2 구현 보고서의 품질 수정 라운드 기록
+- `974855e` — 외부 SDD 구현 보고서를 로컬 ignored 파일로 유지
+- `d59843b` — baseline 문서 정합성 수정 및 리뷰된 pre-report 후보
 
 인계 문서와 구현 계획은 설계 문서와 분리된 후속 커밋으로 관리한다.
 
@@ -41,13 +49,31 @@
 - review-system 설계 커밋: `7851bfa`
 - bootstrap skill 커밋: `526e65f`
 - bootstrap Stage 보고서: `docs/reviews/stages/review-system-bootstrap.md`
+- integration Stage 보고서: `docs/reviews/stages/review-system-integration.md`
+- baseline Stage 보고서: `docs/reviews/stages/baseline-plans-review.md`
 - Task 1 검증: `node --test .agents/skills/stage-quality-gate/tests/*.test.mjs` — 종료 코드 0, 18 tests passed.
 - Task 1 검증: `node .agents/skills/stage-quality-gate/scripts/validate-skills.mjs` — 종료 코드 0, `Validated 3 skills.`
 - Task 1 검증: `git diff --check` — 종료 코드 0, 공백 오류 없음.
 - 현재 기능 브랜치: `feat/stage-quality-review-system`
 - `review-system-integration` Stage Gate: PASS (attempt 1; Human 100.0, AI 100.0, critical 0, checks PASS).
-- 외부 SDD review/fix 및 push: pending. 외부 검토 Important findings 3건의 Fix Round 1을 로컬에서 반영·재검토 중이며, 원격 푸시는 하지 않았다.
+- `baseline-plans-review` attempt 1: BLOCKED (Human 88.0, AI 74.0, critical 0, checks FAIL).
+- `baseline-plans-review` attempt 2: PASS (Human 97.0, AI 95.0, critical 0, checks PASS).
+- baseline 검증: `! rg -n "npx\\.cmd|Test-Path|Resolve-Path|Copy-Item|\\.\\\\out" docs/superpowers/plans/2026-07-30-medical-ai-site-scaffold.md` — 종료 코드 0, 일치 없음.
+- baseline 검증: unavailable generic review-skill absence check — 종료 코드 0, 일치 없음. Exact command은 baseline Stage 보고서에 기록.
+- baseline 검증: `rg -n "Stage Quality Gate|human-editorial-review|ai-technical-review|stage-quality-gate" AGENTS.md docs/superpowers/plans/2026-07-30-medical-ai-site-scaffold.md` — 종료 코드 0, 두 파일에서 정책 확인.
+- baseline 검증: `git diff --check HEAD^ HEAD` — 종료 코드 0, 공백 오류 없음.
+- baseline 검증: `node .agents/skills/stage-quality-gate/scripts/score-review.mjs --input .superpowers/reviews/baseline-plans-review/attempt-2/input.json --report docs/reviews/stages/baseline-plans-review.md` — 종료 코드 0, PASS 97.0/95.0/critical 0/checks PASS.
+- review-system 검증: `node --test .agents/skills/stage-quality-gate/tests/*.test.mjs` — 종료 코드 0, 19 tests passed.
+- review-system 검증: `node .agents/skills/stage-quality-gate/scripts/validate-skills.mjs` — 종료 코드 0, `Validated 3 skills.`
+- 외부 SDD cross-review 및 push: pending. baseline 후보와 ignored 구현 보고서를 먼저 검토하며 원격 push는 하지 않았다.
 - GitHub Pages는 계속 비활성 상태이며, 배포는 발생하지 않았다.
+
+## 남은 비치명적 위험
+
+- 최신 안정 package API와 Next.js 정적 export 동작은 scaffold Task 1에서 version을 고정한 뒤 실제 build로 확인해야 한다.
+- 키보드·보조기술, 375px·768px·1440px 반응형과 라이트·다크 시각 결과는 scaffold UX·visual QA에서 확인해야 한다.
+- `/daily` schema, 화면과 Scheduled Automation은 승인된 범위대로 별도 후속 계획에 남아 있다.
+- 외부 SDD cross-review가 baseline 후보를 승인하기 전에는 현재 기능 브랜치를 push하지 않는다.
 
 ## 확정된 결정
 
@@ -84,14 +110,13 @@
 
 ## 다음 세션의 첫 작업
 
-1. `git status --short`와 `git log -3 --oneline`을 확인한다.
-2. `superpowers:using-git-worktrees`를 사용해 격리 작업공간을 만든다.
-3. 사용자가 선택한 실행 방식에 따라 다음 중 하나를 사용한다.
+1. 외부 SDD cross-review에서 baseline 후보와 ignored 구현 보고서를 확인한다.
+2. 승인 후 현재 기능 브랜치를 push하고 `git status --short`와 `git log -3 --oneline`을 확인한다.
+3. `superpowers:using-git-worktrees`를 사용해 격리된 scaffold 기능 worktree를 만든다.
+4. 사용자가 선택한 실행 방식에 따라 다음 중 하나를 사용한다.
    - `superpowers:subagent-driven-development`
    - `superpowers:executing-plans`
-4. `docs/superpowers/plans/2026-07-30-stage-quality-review-system.md`의 활성 Task를 Stage Quality Gate로 완료한다.
-5. `baseline-plans-review`를 통과시킨다.
-6. 통과한 스캐폴딩 계획을 별도 기능 브랜치에서 실행한다.
+5. 통과한 `docs/superpowers/plans/2026-07-30-medical-ai-site-scaffold.md`의 Task 1부터 Stage Quality Gate로 실행한다.
 
 ## 이번 스캐폴딩 계획의 범위
 
@@ -141,9 +166,9 @@
 
 ## 현재 환경
 
-- 작업 폴더: `/Users/paran/mamekuma-sys.github.io`
+- 작업 폴더: `/Users/paran/mamekuma-sys.github.io/.worktrees/stage-quality-review-system`
 - Git 작성자: `mamekuma-sys <kjun04080@gmail.com>`
-- 현재 브랜치: `main`
+- 현재 브랜치: `feat/stage-quality-review-system`
 - 대상 GitHub 계정: `mamekuma-sys`
 - 향후 공개 주소: `https://mamekuma-sys.github.io/`
 - 현재 원격 저장소: `https://github.com/mamekuma-sys/mamekuma-sys.github.io`
