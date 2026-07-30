@@ -187,6 +187,7 @@ Stage 성격상 평가할 수 없는 차원은 `notApplicable: true`로 표시�
       "weight": 20,
       "rawScore": 4,
       "notApplicable": false,
+      "notApplicableReason": null,
       "evidence": [
         {
           "path": "src/app/page.tsx",
@@ -202,7 +203,7 @@ Stage 성격상 평가할 수 없는 차원은 `notApplicable: true`로 표시�
 }
 ```
 
-`reviewer`는 `human-editorial` 또는 `ai-technical`만 허용한다. 적용 불가 차원은 `rawScore: null`이어야 한다. 적용 가능한 차원은 `rawScore`와 하나 이상의 `evidence`를 가져야 한다. `criticalFindings`는 고유 ID, 근거, 영향과 필수 수정 내용을 포함한다.
+`reviewer`는 `human-editorial` 또는 `ai-technical`만 허용한다. 적용 불가 차원은 `rawScore: null`과 비어 있지 않은 `notApplicableReason`을 가져야 한다. 적용 가능한 차원은 `rawScore`, `notApplicableReason: null`과 하나 이상의 `evidence`를 가져야 한다. `criticalFindings`는 고유 ID, 근거, 영향과 필수 수정 내용을 포함한다.
 
 ## 7. Human Editorial Review Rubric
 

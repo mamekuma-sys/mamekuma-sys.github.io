@@ -7,6 +7,9 @@
 - 승인된 시각 방향: 흰색 `Developer Workspace`
 - 승인된 기술: Next.js App Router + React + TypeScript + Tailwind CSS + MDX
 - 새 공개 저장소를 생성하고 로컬 `main`을 `origin/main`에 푸시함
+- Stage Quality Review System 설계 승인·커밋 완료
+- Human Editorial, AI Technical과 Stage Quality Gate 스킬 구현 계획 작성 완료
+- 리뷰 스킬 구현과 현재 설계·계획의 최초 채점은 아직 시작하지 않음
 - 사이트 코드는 아직 스캐폴딩하지 않음
 - 기존 GitHub Pages 저장소는 사용자 승인 후 2026-07-30 삭제 완료
 - 동일 이름의 새 저장소를 2026-07-30 다시 생성함
@@ -16,15 +19,18 @@
 
 - `9c98587` — 의료 AI 블로그 시리즈 설계
 - `6272a8f` — 의료 AI 사이트 설계
+- `7851bfa` — Stage Quality Review System 설계
 
 인계 문서와 구현 계획은 설계 문서와 분리된 후속 커밋으로 관리한다.
 
 ## 반드시 읽을 문서
 
 1. `AGENTS.md`
-2. `docs/superpowers/specs/2026-07-30-medical-ai-site-design.md`
-3. `docs/superpowers/specs/2026-07-30-medical-ai-blog-series-design.md`
-4. `docs/superpowers/plans/2026-07-30-medical-ai-site-scaffold.md`
+2. `docs/superpowers/specs/2026-07-30-stage-quality-review-system-design.md`
+3. `docs/superpowers/plans/2026-07-30-stage-quality-review-system.md`
+4. `docs/superpowers/specs/2026-07-30-medical-ai-site-design.md`
+5. `docs/superpowers/specs/2026-07-30-medical-ai-blog-series-design.md`
+6. `docs/superpowers/plans/2026-07-30-medical-ai-site-scaffold.md`
 
 ## 확정된 결정
 
@@ -66,9 +72,9 @@
 3. 사용자가 선택한 실행 방식에 따라 다음 중 하나를 사용한다.
    - `superpowers:subagent-driven-development`
    - `superpowers:executing-plans`
-4. `docs/superpowers/plans/2026-07-30-medical-ai-site-scaffold.md`의 Task 1부터 실행한다.
-5. 첫 화면 렌더링 후 `frontend-design`으로 승인된 디자인과 비교한다.
-6. React 구현 후 `vercel-react-best-practices`로 검토한다.
+4. `docs/superpowers/plans/2026-07-30-stage-quality-review-system.md`의 Task 1부터 실행한다.
+5. 세 리뷰 스킬을 구현하고 `baseline-plans-review`를 통과시킨다.
+6. 통과한 스캐폴딩 계획을 별도 기능 브랜치에서 실행한다.
 
 ## 이번 스캐폴딩 계획의 범위
 
@@ -86,6 +92,7 @@
 
 - 의료 AI 최신 연구와 모델의 본격 조사·집필
 - Imagegen 최종 이미지 8장 생성
+- 평일 오전 9시 Daily 분석글 Draft PR을 만드는 Codex Scheduled Automation
 - GitHub Pages·Discussions·Giscus 실제 전환
 
 ## 중요한 안전 게이트
