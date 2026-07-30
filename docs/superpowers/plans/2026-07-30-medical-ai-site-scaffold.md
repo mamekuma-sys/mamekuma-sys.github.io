@@ -22,8 +22,8 @@
 - Unverified medical claims must not appear as published content.
 - Scaffold articles must have `draft: true` and must not appear in production static output.
 - Final editorial images will be generated in a separate image-production plan; do not replace them with CSS-generated artwork.
-- Do not delete, force-push, rename, or mutate the existing remote GitHub Pages repository in this plan.
-- Existing remote repository deletion and recreation require a separate plan and fresh user confirmation.
+- The previous remote GitHub Pages repository was deleted on 2026-07-30 after explicit user confirmation.
+- Do not create a replacement remote repository, configure Pages, or deploy from this scaffold plan.
 - Pin the latest stable packages selected at execution time in `package-lock.json`.
 - Do not use experimental Next.js or Tailwind features unless a stable feature cannot satisfy an approved requirement.
 - Every task ends with its focused tests, a production-relevant check, and a commit.
@@ -36,7 +36,7 @@ This plan delivers the site scaffold and its verification system. It does not de
 
 - researched medical AI articles;
 - the eight final Imagegen assets;
-- deletion or recreation of the remote GitHub repository;
+- creation of the replacement remote GitHub repository;
 - live GitHub Pages, Discussions, or Giscus identifiers.
 
 Those are separate, testable projects and receive separate plans after this scaffold passes review.
@@ -1595,7 +1595,7 @@ The scaffold is complete only when:
 - UX and visual QA Markdown files contain actual results;
 - code review has no unresolved high-severity finding;
 - `HANDOFF.md` reflects the real end state;
-- the existing remote GitHub Pages repository has not been changed.
+- no replacement remote GitHub Pages repository has been created or configured by this plan.
 
 ## Follow-up Plans
 
@@ -1603,4 +1603,4 @@ After scaffold approval, create separate plans in this order:
 
 1. `medical-ai-content-production` — primary-source research and seven publication-ready articles.
 2. `medical-ai-image-production` — Imagegen prompts, eight final assets, alt text, and derivatives.
-3. `medical-ai-pages-cutover` — final remote identity check, user confirmation, destructive repository deletion, recreation, Pages, Discussions, Giscus, and production smoke tests.
+3. `medical-ai-pages-cutover` — final remote identity check, replacement repository creation, Pages, Discussions, Giscus, and production smoke tests.

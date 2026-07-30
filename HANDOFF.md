@@ -8,7 +8,8 @@
 - 승인된 기술: Next.js App Router + React + TypeScript + Tailwind CSS + MDX
 - 로컬 저장소만 초기화되어 있으며 원격 저장소는 연결되지 않음
 - 사이트 코드는 아직 스캐폴딩하지 않음
-- 기존 GitHub Pages 저장소는 삭제하지 않음
+- 기존 GitHub Pages 저장소는 사용자 승인 후 2026-07-30 삭제 완료
+- 공개 주소는 동일 이름 저장소를 다시 만들고 배포할 때까지 사용할 수 없음
 
 ## 주요 커밋
 
@@ -84,24 +85,36 @@
 
 - 의료 AI 최신 연구와 모델의 본격 조사·집필
 - Imagegen 최종 이미지 8장 생성
-- 기존 원격 저장소 삭제와 동일 이름 저장소 재생성
+- 동일 이름 원격 저장소 신규 생성과 로컬 `main` 연결
 - GitHub Pages·Discussions·Giscus 실제 전환
 
 ## 중요한 안전 게이트
 
-- `mamekuma-sys/mamekuma-sys.github.io`를 지금 삭제하지 않는다.
-- 새 사이트가 로컬에서 완성되고 전체 검증을 통과한 뒤 삭제 계획을 별도로 작성한다.
-- 원격 삭제 직전에 사용자에게 정확한 대상과 중단 가능성을 다시 알리고 최종 승인을 받는다.
-- 기존 사이트의 파일과 Git 이력을 보존하지 않는다는 사용자의 결정은 기록됐지만, 실제 삭제 승인은 배포 직전에 다시 받아야 한다.
+- `mamekuma-sys/mamekuma-sys.github.io`는 현재 존재하지 않는다.
+- 사이트 스캐폴딩 계획에서는 원격 저장소를 생성하거나 Pages를 설정하지 않는다.
+- 새 사이트가 로컬에서 완성되고 전체 검증을 통과한 뒤 동일 이름 저장소 생성 계획을 별도로 실행한다.
+- 새 원격의 기본 브랜치는 현재 로컬 브랜치와 동일한 `main`으로 설정한다.
+
+## 2026-07-30 원격 삭제 기록
+
+- 삭제 대상: `mamekuma-sys/mamekuma-sys.github.io`
+- 사용자 최종 확인: `원격 저장소 전체 삭제`
+- 추가 권한 확인: `delete_repo 권한 추가 승인`
+- 삭제 결과: GitHub API `404`, Git 원격 `Repository not found`
+- 삭제 후 `delete_repo` 권한 제거 확인
+- 로컬 커밋 `8fbaaa4`와 전체 설계 문서는 유지
+- 삭제된 원격을 가리키던 `origin` 제거
+- 로컬 브랜치를 `master`에서 `main`으로 변경
 
 ## 현재 환경
 
 - 작업 폴더: `C:\Users\user\Desktop\Healthcare`
 - Git 작성자: `mamekuma-sys <kjun04080@gmail.com>`
-- 현재 브랜치: `master`
+- 현재 브랜치: `main`
 - 대상 GitHub 계정: `mamekuma-sys`
-- 공개 주소: `https://mamekuma-sys.github.io/`
-- 공개 원격 저장소: `https://github.com/mamekuma-sys/mamekuma-sys.github.io`
+- 향후 공개 주소: `https://mamekuma-sys.github.io/`
+- 향후 원격 저장소: `https://github.com/mamekuma-sys/mamekuma-sys.github.io`
+- 현재 원격 연결: 없음
 
 ## 시각 참고
 
