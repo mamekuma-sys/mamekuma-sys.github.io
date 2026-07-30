@@ -117,7 +117,7 @@
 
 ## 현재 환경
 
-- 작업 폴더: `C:\Users\user\Desktop\Healthcare`
+- 작업 폴더: `/Users/paran/mamekuma-sys.github.io`
 - Git 작성자: `mamekuma-sys <kjun04080@gmail.com>`
 - 현재 브랜치: `main`
 - 대상 GitHub 계정: `mamekuma-sys`
