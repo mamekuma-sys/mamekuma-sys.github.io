@@ -106,6 +106,21 @@ Those are separate, testable projects and receive separate plans after this scaf
 
 ---
 
+## Stage Quality Gate
+
+Every implementation-plan Task is a Stage. Its existing commit step creates a local candidate commit, not a pushable final result. After each candidate commit:
+
+1. Run `human-editorial-review` and `ai-technical-review` independently.
+2. Apply and review up to three correction attempts.
+3. Add `docs/reviews/stages/scaffold-task-<two-digit-task>.md`.
+4. Amend the candidate commit with the report.
+5. Rerun the Task's focused checks.
+6. Push the current feature branch only after `stage-quality-gate` reports PASS.
+
+The candidate must not be pushed before PASS. A passing Stage requires both review scores to be at least 90, zero critical findings, and all required checks to pass. Never force-push.
+
+---
+
 ### Task 1: Create the static Next.js foundation and test harness
 
 **Files:**

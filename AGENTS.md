@@ -8,8 +8,10 @@
 2. 다음 설계 문서를 읽는다.
    - `docs/superpowers/specs/2026-07-30-medical-ai-site-design.md`
    - `docs/superpowers/specs/2026-07-30-medical-ai-blog-series-design.md`
+   - `docs/superpowers/specs/2026-07-30-stage-quality-review-system-design.md`
 3. 실행 중인 계획을 읽는다.
    - `docs/superpowers/plans/2026-07-30-medical-ai-site-scaffold.md`
+   - `docs/superpowers/plans/2026-07-30-stage-quality-review-system.md`
 4. `git status --short`와 최근 커밋을 확인한다.
 5. 구현 전 관련 스킬을 먼저 읽고 따른다.
 
@@ -77,6 +79,19 @@ npm run build
 - UX 결과는 `docs/reviews/ux-validation.md`에 기록한다.
 - 시각 검수 결과는 `docs/reviews/visual-qa.md`에 기록한다.
 - 완료를 주장하기 전에 `superpowers:verification-before-completion`을 사용한다.
+
+## Stage Quality Gate
+
+- 모든 구현 계획의 Task는 하나의 Stage다.
+- 각 Stage는 먼저 로컬 후보 커밋을 만든다.
+- 후보 커밋마다 `human-editorial-review`와 `ai-technical-review`를 서로 독립적으로 실행한다.
+- 두 리뷰 결과 뒤에 `stage-quality-gate`를 실행한다.
+- Human과 AI 점수는 각각 90점 이상이고 치명적 문제 0개여야 한다.
+- 수정이 있으면 두 리뷰를 모두 다시 실행한다.
+- 유효 시도는 최대 3회이며, 세 번째에도 통과하지 못하면 중단하고 사용자에게 판단을 요청한다.
+- `docs/reviews/stages/<stage-id>.md`를 커밋한다.
+- PASS 뒤에만 현재 기능 브랜치를 즉시 푸시하며, 강제 푸시는 절대 하지 않는다.
+- 각 Stage 결과를 `HANDOFF.md`에 기록한다.
 
 ## Git과 원격 저장소 안전
 

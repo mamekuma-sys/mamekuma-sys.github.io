@@ -8,8 +8,8 @@
 - 승인된 기술: Next.js App Router + React + TypeScript + Tailwind CSS + MDX
 - 새 공개 저장소를 생성하고 로컬 `main`을 `origin/main`에 푸시함
 - Stage Quality Review System 설계 승인·커밋 완료
-- Human Editorial, AI Technical과 Stage Quality Gate 스킬 구현 계획 작성 완료
-- 리뷰 스킬 구현과 현재 설계·계획의 최초 채점은 아직 시작하지 않음
+- Human Editorial, AI Technical과 Stage Quality Gate 스킬 구현 및 Task 1 Stage 검토 완료
+- `review-system-integration`이 저장소 지침을 Stage Gate에 연결하는 활성 Stage임
 - 사이트 코드는 아직 스캐폴딩하지 않음
 - 기존 GitHub Pages 저장소는 사용자 승인 후 2026-07-30 삭제 완료
 - 동일 이름의 새 저장소를 2026-07-30 다시 생성함
@@ -20,6 +20,10 @@
 - `9c98587` — 의료 AI 블로그 시리즈 설계
 - `6272a8f` — 의료 AI 사이트 설계
 - `7851bfa` — Stage Quality Review System 설계
+- `526e65f` — 세 리뷰 스킬과 결정적 Gate 구현
+- `75e2e56` — Task 1 Stage 보고서
+- `2e16c36` — 예상하지 않은 리뷰 스킬 거부 보강
+- `1def05c` — Task 1 구현 보고서의 품질 수정 라운드 기록
 
 인계 문서와 구현 계획은 설계 문서와 분리된 후속 커밋으로 관리한다.
 
@@ -31,6 +35,18 @@
 4. `docs/superpowers/specs/2026-07-30-medical-ai-site-design.md`
 5. `docs/superpowers/specs/2026-07-30-medical-ai-blog-series-design.md`
 6. `docs/superpowers/plans/2026-07-30-medical-ai-site-scaffold.md`
+
+## Stage Quality Review 진행 상태
+
+- review-system 설계 커밋: `7851bfa`
+- bootstrap skill 커밋: `526e65f`
+- bootstrap Stage 보고서: `docs/reviews/stages/review-system-bootstrap.md`
+- Task 1 검증: `node --test .agents/skills/stage-quality-gate/tests/*.test.mjs` — 종료 코드 0, 18 tests passed.
+- Task 1 검증: `node .agents/skills/stage-quality-gate/scripts/validate-skills.mjs` — 종료 코드 0, `Validated 3 skills.`
+- Task 1 검증: `git diff --check` — 종료 코드 0, 공백 오류 없음.
+- 현재 기능 브랜치: `feat/stage-quality-review-system`
+- 활성 Stage: `review-system-integration` — 저장소 지침에 Stage Gate를 통합 중.
+- GitHub Pages는 계속 비활성 상태이며, 배포는 발생하지 않았다.
 
 ## 확정된 결정
 
@@ -72,8 +88,8 @@
 3. 사용자가 선택한 실행 방식에 따라 다음 중 하나를 사용한다.
    - `superpowers:subagent-driven-development`
    - `superpowers:executing-plans`
-4. `docs/superpowers/plans/2026-07-30-stage-quality-review-system.md`의 Task 1부터 실행한다.
-5. 세 리뷰 스킬을 구현하고 `baseline-plans-review`를 통과시킨다.
+4. `docs/superpowers/plans/2026-07-30-stage-quality-review-system.md`의 활성 Task를 Stage Quality Gate로 완료한다.
+5. `baseline-plans-review`를 통과시킨다.
 6. 통과한 스캐폴딩 계획을 별도 기능 브랜치에서 실행한다.
 
 ## 이번 스캐폴딩 계획의 범위
